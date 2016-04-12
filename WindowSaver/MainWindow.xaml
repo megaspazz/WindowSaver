@@ -1,0 +1,23 @@
+﻿<Window x:Class="WindowSaver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window Saver"
+		Width="400"
+		SizeToContent="Height">
+    <StackPanel>
+		<GroupBox Header="Current Save" Margin="10" Padding="10">
+			<StackPanel>
+				<TextBox x:Name="txtCurrent" IsReadOnly="True" Text="(none)" />
+				<Button x:Name="btnLoadFromFile" Content="Load From File" Click="btnLoadFromFile_Click" />
+				<Button x:Name="btnWriteToFile" Content="Write To File" IsEnabled="False" Click="btnWriteToFile_Click" />
+			</StackPanel>
+		</GroupBox>
+		<GroupBox Header="Windows" Margin="10" Padding="10" >
+			<StackPanel>
+				<CheckBox x:Name="chkAutoSave" IsChecked="true" Content="Auto-save to file" />
+				<Button x:Name="btnSave" Content="Save Current Windows" Click="btnSave_Click" />
+				<Button x:Name="btnLoad" Content="Restore Saved Windows" IsEnabled="False" Click="btnLoad_Click" />
+			</StackPanel>
+		</GroupBox>
+	</StackPanel>
+</Window>
