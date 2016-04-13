@@ -67,7 +67,7 @@ namespace WindowSaver
 				WindowPosition wp;
 				if (WinAPI.ValidHandle(handle) && _info.WindowSave.TryGetValue(handle, out wp))
 				{
-					WinAPI.MoveAndResize(handle, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0010);
+					WinAPI.MoveAndResize(handle, wp.NextWindow, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0010);
 					if (wp.Visible && !string.IsNullOrEmpty(wp.Text))
 					{
 						WindowPosition curr = WindowPosition.FromHandle(handle);
@@ -76,6 +76,7 @@ namespace WindowSaver
 							WinAPI.DisplayWindow(handle, 9);
 						}
 						WinAPI.SetWindowPosition(handle, wp.WindowPlacement);
+						WinAPI.MoveAndResize(handle, wp.NextWindow, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0010);
 					}
 				}
 			}
