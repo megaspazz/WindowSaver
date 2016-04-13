@@ -40,10 +40,6 @@ namespace WindowSaver
 			foreach (IntPtr hWnd in lst)
 			{
 				WindowPosition wp = WindowPosition.FromHandle(hWnd);
-				//if (WinAPI.IsVisible(hWnd) && !string.IsNullOrEmpty(wp.Text))
-				//{
-				//	Console.WriteLine("[{0}] ({1}) {2} === {3} -> {4}", hWnd, wp.ShowCmd, WinAPI.IsVisible(hWnd), wp.Text, WinAPI.GetText(wp.NextWindow));
-				//}
 				_info.WindowSave.Add(hWnd, wp);
 				g.AddEdge(hWnd, wp.NextWindow);
 			}
@@ -65,17 +61,20 @@ namespace WindowSaver
 
 		private void btnLoad_Click(object sender, RoutedEventArgs e)
 		{
-			//Console.WriteLine("LOADING...");
 			WinAPI.MinimizeAll();
 			foreach (IntPtr handle in _info.IterOrder)
 			{
 				WindowPosition wp;
 				if (WinAPI.ValidHandle(handle) && _info.WindowSave.TryGetValue(handle, out wp))
 				{
-					WinAPI.MoveAndResize(handle, wp.NextWindow, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0010);
+					WinAPI.MoveAndResize(handle, 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0010);
 					if (wp.Visible && !string.IsNullOrEmpty(wp.Text))
 					{
-						//Console.WriteLine("MOVED: " + handle + " (" + wp.ShowCmd + ") [" + wp.Text + "]");
+						WindowPosition curr = WindowPosition.FromHandle(handle);
+						if (curr.ShowCmd == 2 && wp.ShowCmd == 2 && !wp.Position.IsEmpty)
+						{
+							WinAPI.DisplayWindow(handle, 9);
+						}
 						WinAPI.SetWindowPosition(handle, wp.WindowPlacement);
 					}
 				}
