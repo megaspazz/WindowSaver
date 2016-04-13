@@ -61,7 +61,6 @@ namespace WindowSaver
 
 		private void btnLoad_Click(object sender, RoutedEventArgs e)
 		{
-			WinAPI.MinimizeAll();
 			foreach (IntPtr handle in _info.IterOrder)
 			{
 				WindowPosition wp;
